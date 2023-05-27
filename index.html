@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png" />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap");
+
+    :root {
+      --background-color: #5c4b51;
+      --text-color: #fdf5e6;
+      --header-color: #f06060;
+      --primary-color: #f3b562;
+      --secondary-color: #dcdcdc;
+      --accent-color: #f2e8df;
+      --foreground-color: #8cbeb2;
+    }
+
+    * {
+      font-family: "Space Mono", monospace;
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background-color: var(--secondary-color);
+      gap: 1rem;
+    }
+
+    .title {
+      color: var(--text-color);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    .card {
+      background-color: var(--foreground-color);
+      width: 800px;
+      border-radius: 4px;
+    }
+
+    .btn-container {
+      display: flex;
+      padding: 0.5rem;
+      gap: 0.5rem;
+    }
+
+    .inputs-section,
+    .outputs-section {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .outputs-section {
+      background-color: var(--text-color);
+      border-radius: 4px;
+      padding: 0.5rem;
+    }
+
+    .conta-sec,
+    .tip-sec,
+    .people-sec {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .inputs-section {
+      gap: 1rem;
+    }
+
+    label {
+      color: var(--text-color);
+      font-size: 14px;
+    }
+
+    .conta-input {
+      position: relative;
+    }
+
+    .conta-input input {
+      width: 100%;
+      text-align: right;
+      padding: 0.5rem;
+      border: none;
+      font-size: 1.2rem;
+      color: purple;
+      background-color: var(--accent-color);
+      outline-color: yellow;
+      border-radius: 4px;
+    }
+
+    .conta-input img {
+      position: absolute;
+      top: 50%;
+      left: 5%;
+      transform: translate(-50%, -50%);
+    }
+
+    .people-btns,
+    .tip-btns {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 0.5rem;
+    }
+
+    .people-btns button {
+      width: 110px;
+      color: var(--foreground-color);
+      background-color: var(--text-color);
+      border: none;
+      padding: 0.5rem;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    .tip-btns button {
+      width: 110px;
+      color: var(--foreground-color);
+      background-color: var(--text-color);
+      border: none;
+      padding: 0.5rem;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    .people-btns button:hover,
+    .tip-btns button:hover {
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+
+    .selected {
+      background-color: var(--background-color) !important;
+      color: var(--text-color) !important;
+    }
+
+    .people-btns input {
+      width: 110px;
+      padding: 0.5rem;
+      text-align: left;
+      font-size: 1rem;
+      border: none;
+      background-color: var(--accent-color);
+      border-radius: 4px;
+      outline-color: yellow;
+    }
+
+    .tip-btns input {
+      width: 110px;
+      padding: 0.5rem;
+      text-align: left;
+      font-size: 1rem;
+      border: none;
+      background-color: var(--accent-color);
+      border-radius: 4px;
+      outline-color: yellow;
+    }
+
+    .outputs-section {
+      gap: 0.2rem;
+    }
+
+    .conta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      border: 1px solid gold;
+      border-radius: 5px;
+      background-color: white;
+      padding: 3px;
+      margin: 5px;
+
+    }
+
+    .conta h2 {
+      color: var(--background-color);
+      font-size: 2rem;
+      margin-bottom: 2px;
+      align-self: flex-end;
+    }
+
+    .conta p {
+      color: var(--foreground-color);
+      font-size: 1rem;
+      margin-bottom: 2px;
+      align-self: flex-start;
+    }
+
+
+    .reset-btn {
+      padding: 0.3rem;
+      text-transform: uppercase;
+      background-color: var(--background-color);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      color: var(--text-color);
+      opacity: 0.8;
+    }
+
+    .reset-btn:hover {
+      opacity: 1;
+    }
+
+    @media screen and (max-width: 750px) {
+      body {
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 2rem;
+        gap: 0;
+      }
+
+      .inputs-section,
+      .outputs-section {
+        width: 100%;
+      }
+
+      .card {
+        width: 100%;
+        margin-top: auto;
+      }
+
+      .btn-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .tip-btns {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .tip-btns div button {
+        width: 100px;
+      }
+
+      .tip-btns input {
+        width: 100px;
+      }
+
+      .tip-btns div {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .btn-container {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        gap: 10px;
+        width: 30px;
+        height: 40px;
+      }
+
+      .reset-btn {
+        position: absolute;
+        bottom: 10px;
+
+      }
+    }
+  </style>
+  <title>Calculadora de gorjeta</title>
+</head>
+
+<body>
+  <h2 class="title">
+    ALEX <br />
+    HENRIQUE
+  </h2>
+  <div class="card">
+    <div class="btn-container">
+      <div class="inputs-section">
+        <div class="conta-sec">
+          <label for="conta">Conta total</label>
+          <div class="conta-input">
+            <input type="text" placeholder="0" id="conta" />
+            <img src="./images/icon-dollar.svg" alt="dollar" />
+          </div>
+        </div>
+        <div class="people-sec">
+          <label for="people">Selecione o número de pessoas</label>
+          <div class="people-btns">
+            <div>
+              <input type="number" placeholder=":" id="numberOfPeople" />
+              <button id="bt1">1</button>
+              <button id="bt2">2</button>
+            </div>
+            <div>
+              <button id="bt3">3</button>
+              <button id="bt4">4</button>
+              <button id="bt5">5</button>
+            </div>
+          </div>
+        </div>
+        <div class="tip-sec">
+          <label for="tip">Selecione a porcentagem da gorjeta</label>
+          <div class="tip-btns">
+            <div>
+              <input type="number" placeholder=":" id="custom" />
+              <button id="btn0">0%</button>
+              <button id="btn5">5%</button>
+            </div>
+            <div>
+              <button id="btn10">10%</button>
+              <button id="btn15">15%</button>
+              <button id="btn20">20%</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="outputs-section">
+        <div class="outsection">
+          <div class="conta">
+            <p>Conta sem gorjetas</p>
+            <h2 id="valorConta">$0.00</h2>
+          </div>
+          <div class="conta">
+            <p>Gorjeta por pessoa</p>
+            <h2 id="tipAmount">$0.00</h2>
+          </div>
+          <div class="conta">
+            <p>Total por pessoa</p>
+            <h2 id="total">$0.00</h2>
+          </div>
+          <div class="conta">
+            <p>Total a ser pago</p>
+            <h2 id="PagoTotal">$0.00</h2>
+          </div>
+        </div>
+        <div class="btn-container">
+          <button class="reset-btn" id="calculaBtn">Calcular</button>
+          <button class="reset-btn" id="resetBtn">Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+
+    const contaAmount = document.getElementById("conta");
+    const numberOfPeople = document.getElementById("numberOfPeople");
+    const customTipPercentage = document.getElementById("custom");
+    const calculaButton = document.getElementById("calculaBtn");
+    const resetButton = document.getElementById("resetBtn");
+    const btn0 = document.getElementById("btn0");
+    const btn5 = document.getElementById("btn5");
+    const btn10 = document.getElementById("btn10");
+    const btn15 = document.getElementById("btn15");
+    const btn20 = document.getElementById("btn20");
+    const bt1 = document.getElementById("bt1");
+    const bt2 = document.getElementById("bt2");
+    const bt3 = document.getElementById("bt3");
+    const bt4 = document.getElementById("bt4");
+    const bt5 = document.getElementById("bt5");
+    const valorConta = document.getElementById("valorConta");
+    const contaTipAmount = document.getElementById("tipAmount");
+    const contaTotalPerPerson = document.getElementById("total");
+    const totalPago = document.getElementById("PagoTotal");
+    resetButton.addEventListener("click", resetEverything);
+    bt1.addEventListener("click", () => { numberOfPeople.value = "1"; });
+    bt2.addEventListener("click", () => { numberOfPeople.value = "2"; });
+    bt3.addEventListener("click", () => { numberOfPeople.value = "3"; });
+    bt4.addEventListener("click", () => { numberOfPeople.value = "4"; });
+    bt5.addEventListener("click", () => { numberOfPeople.value = "5"; });
+    btn0.addEventListener("click", () => { customTipPercentage.value = "0"; });
+    btn5.addEventListener("click", () => { customTipPercentage.value = "5"; });
+    btn10.addEventListener("click", () => { customTipPercentage.value = "10"; });
+    btn15.addEventListener("click", () => { customTipPercentage.value = "15"; });
+    btn20.addEventListener("click", () => { customTipPercentage.value = "20"; });
+    numberOfPeople.addEventListener("input", () => {
+      const value = parseInt(numberOfPeople.value);
+      if (value <= 0) {
+        numberOfPeople.value = "1";
+      }
+    });
+    customTipPercentage.addEventListener("input", () => {
+      const value = parseInt(customTipPercentage.value);
+      if (value < 0) {
+        customTipPercentage.value = "0";
+      }
+    });
+    contaAmount.addEventListener("focus", () => {
+      if (contaAmount.value === "Digite o valor da conta") {
+        contaAmount.value = ""; 
+      }
+    });
+
+    function initializePage() {
+      resetEverything();
+    }
+
+
+    function resetEverything() {
+      contaTipAmount.innerHTML = "$0.00";
+      valorConta.innerHTML = "$0.00";
+      contaTotalPerPerson.innerHTML = "$0.00";
+      totalPago.innerHTML = "$0.00";
+      contaAmount.value = "Digite o valor da conta";
+      numberOfPeople.value = "";
+      customTipPercentage.value = "";
+    }
+
+    calculaButton.addEventListener("click", calculaEverything);
+    function calculaEverything() {
+      calculateTip(
+        parseFloat(contaAmount.value),
+        parseFloat(customTipPercentage.value),
+        parseInt(numberOfPeople.value)
+      );
+    }
+    function calculateTip(contaAmount, tipPercentage, numberOfPeople) {
+      let tipAmount = (contaAmount * (tipPercentage / 100)) / numberOfPeople;
+      let tip = Math.floor(tipAmount * 100) / 100;
+      tip = tip.toFixed(2);
+      let totalAmount = (tipAmount * numberOfPeople + contaAmount) / numberOfPeople;
+      totalAmount = totalAmount.toFixed(2);
+      let total2Pago = (totalAmount * numberOfPeople).toFixed(2);
+      valorConta.innerHTML = isNaN(contaAmount) ? "Valor inválido" : `$${contaAmount.toFixed(2)}`; //1 
+      contaTipAmount.innerHTML = isNaN(tip) ? "Valor inválido" : `$${tip}`; // 2
+      contaTotalPerPerson.innerHTML = isNaN(totalAmount) ? "Valor inválido" : `$${totalAmount}`; //3     
+      totalPago.innerHTML = isNaN(total2Pago) ? "Valor inválido" : `$${total2Pago}`;
+    }
+
+    window.addEventListener("load", initializePage);
+  </script>
+</body>
